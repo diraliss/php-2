@@ -1,2 +1,2 @@
-<h1><?=$product->getName()?></h1>
-<p><?=$product->getDescription()?></p>
+<h2><?=$product->name?></h2>
+<p><?=$product->description?></p>

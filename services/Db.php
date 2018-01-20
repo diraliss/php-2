@@ -48,23 +48,27 @@ class Db
         return true;
     }
 
-    public function queryOne($sql, $params = [], $class = null, $columns = null)
+    public function fetchOne($sql, $params = [])
     {
-        $result = $this->queryAll($sql, $params, $class, $columns);
-        if (count($result) > 0) {
-            return $result[0];
-        } else {
-            return null;
-        }
+        return $this->fetchAll($sql, $params)[0];
     }
 
-    public function queryAll($sql, $params = [], $class = null, $columns = null)
+    public function fetchAll($sql, $params = [])
     {
-        if ($class != null) {
-            return $this->query($sql, $params)->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class, $columns);
-        } else {
-            return $this->query($sql, $params)->fetchAll();
-        }
+        return $this->query($sql, $params)->fetchAll();
+    }
+
+    public function fetchObject($sql, $params = [], $class)
+    {
+        $smtp = $this->query($sql, $params);
+        $smtp->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
+        return $smtp->fetch();
+    }
+
+    public function fetchAllObjects($sql, $params = [], $class)
+    {
+        $smtp = $this->query($sql, $params);
+        return $smtp->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
     }
 
     private function prepareDsnString()

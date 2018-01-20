@@ -1,20 +1,17 @@
 <?php
 
 namespace app\models;
+
 /**
  * Class Category
  * @package app\models
  */
-class Category extends Model
+class Category extends DataEntity
 {
-    /**
-     * @var int
-     */
-    private $id;
     /**
      * @var string
      */
-    private $name;
+    public $name;
 
     /**
      * Category constructor.
@@ -26,40 +23,6 @@ class Category extends Model
         parent::__construct();
         $this->id = $id;
         $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTableName()
-    {
-        return "category";
-    }
-
-    /**
-     * @return string
-     */
-    public function getClassName()
-    {
-        return "Category";
-    }
-
-    /**
-     * @return array
-     */
-    public function getColumnNames()
-    {
-        return ["id", "name"];
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        $this->update($this->id, ["name" => $name]);
     }
 
 }

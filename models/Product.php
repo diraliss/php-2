@@ -6,24 +6,20 @@ namespace app\models;
  * Class Product
  * @package app\models
  */
-class Product extends Model
+class Product extends DataEntity
 {
     /**
-     * @var int
+     * @var string
      */
-    private $id;
+    public $name;
     /**
      * @var string
      */
-    private $name;
-    /**
-     * @var string
-     */
-    private $description;
+    public $description;
     /**
      * @var int
      */
-    private $price;
+    public $price;
 
     /**
      * Product constructor.
@@ -40,60 +36,5 @@ class Product extends Model
         $this->description = $description;
         $this->price = $price;
     }
-
-    /**
-     * @return string
-     */
-    public function getTableName()
-    {
-        return "product";
-    }
-
-    /**
-     * @return string
-     */
-    public function getClassName()
-    {
-        return "Product";
-    }
-
-    /**
-     * @return array
-     */
-    public function getColumnNames()
-    {
-        return ["id", "name", "description", "price"];
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        $this->update($this->id, ["name" => $name]);
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        $this->update($this->id, ["description" => $description]);
-    }
-
-    /**
-     * @param int $price
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        $this->update($this->id, ["price" => $price]);
-    }
-
 
 }

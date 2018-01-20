@@ -2,17 +2,24 @@
 
 namespace app\controllers;
 
-use app\models\Product;
+
+use app\models\repositories\ProductRepository;
 
 class ProductController extends Controller
 {
+
+    private function getRepository()
+    {
+        return new ProductRepository();
+    }
+
     public function actionCard()
     {
-        $id = $_GET["id"] ?: 1;
-        $product = Product::getOne($id);
+        $id = isset($_GET["id"]) ? $_GET["id"] : 1;
+        $product = $this->getRepository()->getOne($id);
 
         if ($this->useLayout) {
-            $structure = ["layouts/main" => [
+            echo $this->render("layouts/main", [
                 "title" => "Product Card",
                 "header" => "Это header",
                 "content" => [
@@ -21,12 +28,33 @@ class ProductController extends Controller
                     ]
                 ],
                 "footer" => "Это footer"
-            ]];
+            ]);
         } else {
-            $structure = ["product/card" => [
+            echo $this->render("product/card", [
                 "product" => $product
-            ]];
+            ]);
         }
-        echo $this->renderStructure($structure);
+    }
+
+    public function actionIndex()
+    {
+        $products = $this->getRepository()->getAll();
+
+        if ($this->useLayout) {
+            echo $this->render("layouts/main", [
+                "title" => "Product Catalog",
+                "header" => "Это header",
+                "content" => [
+                    "product/index" => [
+                        "products" => $products
+                    ]
+                ],
+                "footer" => "Это footer"
+            ]);
+        } else {
+            echo $this->render("product/index", [
+                "products" => $products
+            ]);
+        }
     }
 }
