@@ -7,7 +7,7 @@ use app\services\renderers\TemplateRenderer;
 
 abstract class Controller
 {
-    protected $action;
+    private $action;
     protected $layout = "main";
     protected $useLayout = true;
     protected $defaultAction = "index";
@@ -19,7 +19,7 @@ abstract class Controller
      * Controller constructor.
      * @param IRenderer|null $renderer
      */
-    public function __construct(IRenderer $renderer)
+    public function __construct(IRenderer $renderer = null)
     {
         $this->renderer = $renderer;
     }
